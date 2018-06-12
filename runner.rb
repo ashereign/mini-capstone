@@ -8,28 +8,28 @@ require 'unirest'
 
 #bonus
 # params = {}
-puts "Enter product name"
-name = gets.chomp
-puts "Enter product price"
-price = gets.chomp
-puts "Enter product url"
-image_url = gets.chomp
-puts "Enter product description"
-description = gets.chomp
+# puts "Enter product name"
+# name = gets.chomp
+# puts "Enter product price"
+# price = gets.chomp
+# puts "Enter product url"
+# image_url = gets.chomp
+# puts "Enter product description"
+# description = gets.chomp
 
-params = {
-  # @name = name
-  name: name
-  price:  price
-  # @product.price = price 
-  image_url: image_url
-  description: description
-}
+# params = {
+#   # @name = name
+#   name: name
+#   price:  price
+#   # @product.price = price 
+#   image_url: image_url
+#   description: description
+# }
 
-response = Unirest.post("http://localhost:3000/api/products", parameters: params).body
+# response = Unirest.post("http://localhost:3000/api/products", parameters: params).body
 
 
-puts JSON.pretty_generate(response)
+# puts JSON.pretty_generate(response)
 
 # puts response
 
@@ -50,6 +50,19 @@ puts JSON.pretty_generate(response)
 # response = Unirest.delete("http://localhost:3000/api/products/#{product_id}").body
 
 # puts JSON.pretty_generate(response)
+
+
+
+response = Unirest.post(
+    "http://localhost:3000/users",
+    parameters: {
+      name: "Sue",
+      email: "sue@email.com",
+      password: "passy",
+      password_confirmation: "passy"
+    }
+  )
+  p response.body
 
 
 
