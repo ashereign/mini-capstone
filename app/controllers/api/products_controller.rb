@@ -1,7 +1,9 @@
 class Api::ProductsController < ApplicationController
 
+# before_action :authenticate_user
+
   def index
-    @products = Product.all 
+    @products = Product.all
 
     if params[:search]
       @products = Product.where("name LIKE ?", "%#{params[:search]}%")
@@ -13,10 +15,18 @@ class Api::ProductsController < ApplicationController
       @products = @products.order(id: :asc)
     end
 
-    # @products = @products.order(:id) ||
-    # @produts = @products.sort_by(:price)
+    if params[:category]
+      category = Category.find(name: params[:category])
+      @products = category.products
+    end
+    #if we pass the category, we will get back all the projects associated with that category. 
 
     render 'index.json.jbuilder'
+
+    @products = @products.order(:id) ||
+    @produts = @products.sort_by(:price)
+
+    
   end
 
   def show

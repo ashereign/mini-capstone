@@ -5,6 +5,7 @@ json.price product.price
 json.description product.description
 json.tax product.tax
 json.total product.total
+json.categories product.categories 
 # json.supplier product.supplier
 
 json.supplier do

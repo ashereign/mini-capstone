@@ -1,5 +1,7 @@
 class Product < ApplicationRecord
 
+has_many :category_products
+has_many :categories, through: :category_products
 
 belongs_to :supplier   #returns a supplier hash #assumes supplier_id foreign key exists
 # def supplier
@@ -7,6 +9,7 @@ belongs_to :supplier   #returns a supplier hash #assumes supplier_id foreign key
 #   #returns a hash
 # end
 has_many :images
+has_many :orders
 
 # def images
 #     Image.where(product_id: id)
