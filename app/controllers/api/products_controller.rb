@@ -44,10 +44,16 @@ def create
       stock: params[:stock])
 
     if @product.save
-      render "show.json.jbuilder"
-    else
-      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
-    end
+      @image = Image.new(
+        product_id: @product.id,
+        image_url: "https://cdn.pixabay.com/photo/2012/04/26/18/56/smiley-42842_960_720.png"
+        )
+        if @image.save
+          render "show.json.jbuilder"
+        else
+          render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+        end
+      end 
     #creating new recipe hash, can still use 'show' file 
 end
 
