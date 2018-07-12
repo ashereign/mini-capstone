@@ -1,12 +1,13 @@
 class Api::ProductsController < ApplicationController
 
-# before_action :authenticate_user
-
+before_action :authenticate_admin, except: [:index, :show]
+  #want anyone to see index and show pages
   def index
     @products = Product.all
 
-    if params[:search]
-      @products = Product.where("name LIKE ?", "%#{params[:search]}%")
+    name_search = params[:search]
+    if name_search
+      @products = Product.where("name LIKE ?", "%#{name_search}%")
     end
 
     if params[:price_sort]
@@ -25,59 +26,66 @@ class Api::ProductsController < ApplicationController
 
     @products = @products.order(:id) ||
     @produts = @products.sort_by(:price)
-
-    
   end
 
-  def show
+def show
   product_id = params[:id]
   @product = Product.find_by(id: product_id)
   render "show.json.jbuilder"
-  end
+end
 
 def create
-  #create a new recipe?
-  @product = Product.create(
-    name: params[:name],
-    price: params[:price], 
-    # image_url: params[:image_url], description: params[:description],
-    stock: params[:stock])
-  
-  render "show.json.jbuilder"
-  #creating new recipe hash, can still use 'show' file 
+    #create a new recipe?
+    @product = Product.new(
+      name: params[:name],
+      price: params[:price], 
+      description: params[:description], 
+      supplier_id: params[:supplier_id], 
+      stock: params[:stock])
+
+    if @product.save
+      render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
+    #creating new recipe hash, can still use 'show' file 
 end
 
 def update
-  #find the product to update (in this case by url segment parameter)
-  product_id = params[:id]
-  @product = Product.find_by(id: product_id)
-  #tell it what information to update
-  # @product = Product.update(
-  #   name: params[:name],
-  #   price: params[:price], 
-  #   image_url: params[:image_url], 
-  #   description:params[:description])
+    #find the product to update (in this case by url segment parameter)
+    product_id = params[:id]
+    @product = Product.find_by(product_id)#####################
+    #tell it what information to update
+    # @product = Product.update(
+    #   name: params[:name],
+    #   price: params[:price], 
+    #   image_url: params[:image_url], 
+    #   description:params[:description])
 
-  # can use CRUD method to save individual attributes too
-  @product.name = params[:name] || @product.name
-  @product.price = params[:price] || @product.price 
-  # @product.image_url = params[:image_url] || @product.image_url
-  @product.description = params[:description] || @product.description
-    
-    # using the || so that if the user doesn't input anything, it won't update to 'nil' - user friendly 
-    @product.save
-
-    render "show.json.jbuilder"
+    # can use CRUD method to save individual attributes too
+    @product.name = params[:name] || @product.name
+    @product.price = params[:price] || @product.price 
+    # @product.image_url = params[:image_url] || @product.image_url
+    @product.description = params[:description] || @product.description
+    @product.supplier_id = params[:supplier_id] || @product.supplier_id
+      
+      # using the || so that if the user doesn't input anything, it won't update to 'nil' - user friendly 
+    if @product.save
+       render "show.json.jbuilder"
+    else
+      render json: {errors: @product.errors.full_messages}, status: :unprocessable_entity
+    end
 end
 
-def destroy
-  product_id = params[:id]
-  @product = Product.find_by(id: product_id)
-  @product.destroy
-  render json: {message: "Product successfully destroyed"}
+  def destroy
+    product_id = params[:id]
+    @product = Product.find_by(id: product_id)
+    @product.destroy
+    render json: {message: "Product successfully destroyed"}
+  end
 end
-  
-end
+
+
 
 
 

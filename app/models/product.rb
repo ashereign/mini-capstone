@@ -1,5 +1,13 @@
 class Product < ApplicationRecord
 
+validates :name, presence: true, uniqueness: true
+validates :price, presence: true
+validates :price, numericality: { greater_than: 0 }
+validates :description, length: { minimum: 2 }
+validates :description, length: { maximum: 500 }
+validates :description, presence: true 
+
+
 has_many :category_products
 has_many :categories, through: :category_products
 has_many :carted_products
