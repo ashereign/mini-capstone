@@ -22,6 +22,17 @@ Order.create!([
   {user_id: 3, subtotal: 495.0, tax: 44.55, total: 539.55},
   {user_id: 3, subtotal: 1500.0, tax: 135.0, total: 1635.0}
 ])
+
+Product.create!([
+  {name: "Macbook Air", price: "1500.0", description: "15 in. retina display 500gb", stock: true, supplier_id: 2},
+  {name: "Canon Rebel T3i", price: "1000.0", description: "includes body and 1 50mm lens", stock: true, supplier_id: 3},
+  {name: "Microsoft Surface Pro", price: "1300.0", description: "Surface Pro (newest version) Intel Core m3 / 128GB SSD / 4GB RAM", stock: true, supplier_id: 3},
+  {name: "Amazon Echo", price: "100.0", description: "The next generation Amazon Echo connects to the Alexa Voice Service to let you play music, control smart home devices, make hands-free calls and text messages, and more. Enhanced far-field voice recognition lets Alexa hear you even when music's playing.", stock: true, supplier_id: 1},
+  {name: "TI-84 Graphing Calculator", price: "99.0", description: "perfect for college courses!", stock: true, supplier_id: 2},
+  {name: "Nest", price: "269.0", description: "IoT Home Thermostat", stock: true, supplier_id: 1},
+  {name: "Test", price: "20.0", description: "test stuff", stock: nil, supplier_id: 1}
+])
+
 CartedProduct.create!([
   {user_id: 1, product_id: 1, quantity: 1, status: "carted", order_id: nil},
   {user_id: 2, product_id: 5, quantity: 1, status: "carted", order_id: nil},
@@ -43,15 +54,7 @@ Category.create!([
   {name: "PCs"}
 ])
 
-Product.create!([
-  {name: "Macbook Air", price: "1500.0", description: "15 in. retina display 500gb", stock: true, supplier_id: 2},
-  {name: "Canon Rebel T3i", price: "1000.0", description: "includes body and 1 50mm lens", stock: true, supplier_id: 3},
-  {name: "Microsoft Surface Pro", price: "1300.0", description: "Surface Pro (newest version) Intel Core m3 / 128GB SSD / 4GB RAM", stock: true, supplier_id: 3},
-  {name: "Amazon Echo", price: "100.0", description: "The next generation Amazon Echo connects to the Alexa Voice Service to let you play music, control smart home devices, make hands-free calls and text messages, and more. Enhanced far-field voice recognition lets Alexa hear you even when music's playing.", stock: true, supplier_id: 1},
-  {name: "TI-84 Graphing Calculator", price: "99.0", description: "perfect for college courses!", stock: true, supplier_id: 2},
-  {name: "Nest", price: "269.0", description: "IoT Home Thermostat", stock: true, supplier_id: 1},
-  {name: "Test", price: "20.0", description: "test stuff", stock: nil, supplier_id: 1}
-])
+
 CategoryProduct.create!([
   {product_id: 1, category_id: 2}
 ])
